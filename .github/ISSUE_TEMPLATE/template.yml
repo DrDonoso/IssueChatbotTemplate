@@ -6,7 +6,7 @@ labels: ['test']
 body:
 - type: dropdown
   attributes:
-    label: Dropdown
+    label: Dropdown label
     description: Test Environment
     options:
       - dev
@@ -15,6 +15,6 @@ body:
 - type: textarea
   id: description
   attributes:
-    label: "TextArea"
+    label: "TextArea label"
     description: "Test description"
     placeholder: "Test placeholder"
