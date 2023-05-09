@@ -1,0 +1,20 @@
+---
+name: "Test Issue"
+description: "Test issue"
+title: "[Test Issue] Brief description"
+labels: ['test']
+body:
+- type: dropdown
+  attributes:
+    label: Dropdown
+    description: Test Environment
+    options:
+      - dev
+      - pre
+      - pro
+- type: textarea
+  id: description
+  attributes:
+    label: "TextArea"
+    description: "Test description"
+    placeholder: "Test placeholder"

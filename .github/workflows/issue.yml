@@ -1,0 +1,59 @@
+---
+    name: issue
+    run-name: 
+    on:
+      issues:
+        types: [opened]
+    
+    jobs:
+      issue:
+        name: Initialize
+        runs-on: ubuntu-latest
+        if: ${{ contains(github.event.issue.title , '[Test Issue]')}}
+        timeout-minutes: 30
+        steps:
+          - name: Add Comment
+            uses: actions/github-script@v6
+            with:
+              script: |
+                github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: 'Workflow running on: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+                });
+
+          - name: Get inputs
+            id: inputs
+            shell: bash
+            run: |
+              dropdown=$(echo "${{ github.event.issue.body }}" | awk '/^### Dropdown$/{getline;getline; print}')
+              echo "dropdown=${dropdown}" >> $GITHUB_OUTPUT
+
+              textarea=$(echo "${{ github.event.issue.body }}" | awk '/^### TextArea$/{getline;getline; print}')
+              echo "textarea=${textarea}" >> $GITHUB_OUTPUT
+
+          - uses: actions/github-script@v6
+            name: Add label
+            with:
+              script: |
+                github.rest.issues.addLabels({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: ["environment/${{steps.inputs.outputs.dropdown}}"]
+                });
+
+        outputs:
+          dropdown: ${{ steps.inputs.outputs.dropdown }}
+          textarea: ${{ steps.inputs.outputs.textarea }}
+
+      process:
+          name: Process
+          runs-on: ubuntu-latest
+          needs: issue
+          steps:
+            - name: Echo
+              run: |
+                echo "Dropdown: ${{ needs.issue.outputs.dropdown }}"
+                echo "TextArea: ${{ needs.issue.outputs.textarea }}"
