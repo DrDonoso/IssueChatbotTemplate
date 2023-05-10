@@ -58,6 +58,7 @@
                 });
 
         outputs:
+          input: ${{ steps.inputs.outputs.input_label }}
           dropdown: ${{ steps.inputs.outputs.dropdown_label }}
           textarea: ${{ steps.inputs.outputs.textarea_label }}
 
@@ -68,5 +69,6 @@
           steps:
             - name: Echo
               run: |
+                echo "Input: ${{ needs.issue.outputs.input }}"
                 echo "Dropdown: ${{ needs.issue.outputs.dropdown }}"
                 echo "TextArea: ${{ needs.issue.outputs.textarea }}"

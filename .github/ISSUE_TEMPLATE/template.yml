@@ -4,6 +4,13 @@ description: "Test issue"
 title: "[Test Issue] Brief description"
 labels: ['test']
 body:
+- type: input
+  attributes:
+    label: Input label
+    description: Input description
+    placeholder: input placeholder
+  validations:
+    required: false
 - type: dropdown
   attributes:
     label: Dropdown label
