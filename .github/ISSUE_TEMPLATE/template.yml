@@ -10,7 +10,8 @@ body:
     description: Input description
     placeholder: input placeholder
   validations:
-    required: false
+    required: true
+
 - type: dropdown
   attributes:
     label: Dropdown label
@@ -19,9 +20,34 @@ body:
       - dev
       - pre
       - pro
+  validations:
+    required: true
+
+- type: dropdown
+  attributes:
+    multiple: true
+    label: Dropdown multiple label
+    description: Dropdown multiple description
+    options:
+      - option 1
+      - option 2
+      - option 3
+  validations:
+    required: true
+
 - type: textarea
   id: description
   attributes:
     label: "TextArea label"
     description: "Test description"
     placeholder: "Test placeholder"
+  validations:
+    required: true
+
+- type: checkboxes
+  attributes:
+    label: Checkbox label
+    description: Checkbox description
+    options:
+      - label: Checkbox label 1
+      - label: Checkbox label 2
